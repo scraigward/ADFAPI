@@ -115,7 +115,10 @@
 									"referenceName": "RestGetUsers",
 									"type": "DatasetReference",
 									"parameters": {
-										"PageNo": "?page=1"
+										"PageNo": {
+											"value": "?page=@{item()}",
+											"type": "Expression"
+										}
 									}
 								}
 							],
