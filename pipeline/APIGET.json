@@ -66,7 +66,72 @@
 										"supportRFC5988": "true"
 									}
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"path": "$['page']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['per_page']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['total']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['total_pages']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['id']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['email']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['first_name']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['last_name']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['avatar']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['support']['url']"
+											}
+										},
+										{
+											"source": {
+												"path": "$['support']['text']"
+											}
+										}
+									]
+								}
 							},
 							"inputs": [
 								{
@@ -75,6 +140,12 @@
 									"parameters": {
 										"PageNo": "?page=1"
 									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SQLUsers",
+									"type": "DatasetReference"
 								}
 							]
 						}
