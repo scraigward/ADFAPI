@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "GETUSERSAPI",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -20,6 +20,26 @@
 						"x-api-key": "reqres-free-v1"
 					},
 					"url": "https://reqres.in/api/users?page=1"
+				}
+			},
+			{
+				"name": "ForEachUser",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GETUSERSAPI",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@range(1,activity('GETUSERSAPI').output.total_pages)",
+						"type": "Expression"
+					},
+					"isSequential": true
 				}
 			}
 		],
