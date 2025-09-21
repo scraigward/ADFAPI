@@ -71,7 +71,10 @@
 							"inputs": [
 								{
 									"referenceName": "RestGetUsers",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"PageNo": "?page=1"
+									}
 								}
 							]
 						}
