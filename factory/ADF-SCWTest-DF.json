@@ -1,0 +1,9 @@
+{
+	"name": "ADF-SCWTest-DF",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "feec32be-0eaa-482e-ad44-b354b32d2a46",
+		"tenantId": "93f03297-9d6a-4de1-8464-7cf358b363e5"
+	}
+}
