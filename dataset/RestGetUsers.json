@@ -1,0 +1,23 @@
+{
+	"name": "RestGetUsers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestGetUsers",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"PageNo": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().PageNo",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
