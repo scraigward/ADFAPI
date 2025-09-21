@@ -77,57 +77,34 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['page']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['per_page']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['total']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['total_pages']"
-											}
-										},
-										{
-											"source": {
 												"path": "$['data'][0]['id']"
+											},
+											"sink": {
+												"name": "ID"
 											}
 										},
 										{
 											"source": {
 												"path": "$['data'][0]['email']"
+											},
+											"sink": {
+												"name": "Email"
 											}
 										},
 										{
 											"source": {
 												"path": "$['data'][0]['first_name']"
+											},
+											"sink": {
+												"name": "First_Name"
 											}
 										},
 										{
 											"source": {
 												"path": "$['data'][0]['last_name']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['data'][0]['avatar']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['support']['url']"
-											}
-										},
-										{
-											"source": {
-												"path": "$['support']['text']"
+											},
+											"sink": {
+												"name": "Last_Name"
 											}
 										}
 									]
