@@ -79,7 +79,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"PageNo": {
+					"pageNo": {
 						"type": "string"
 					}
 				},
@@ -87,7 +87,7 @@
 				"type": "RestResource",
 				"typeProperties": {
 					"relativeUrl": {
-						"value": "@dataset().PageNo",
+						"value": "@dataset().pageNo",
 						"type": "Expression"
 					}
 				},
@@ -257,7 +257,7 @@
 											"referenceName": "RestGetUsers",
 											"type": "DatasetReference",
 											"parameters": {
-												"PageNo": {
+												"pageNo": {
 													"value": "?page=@{item()}",
 													"type": "Expression"
 												}
