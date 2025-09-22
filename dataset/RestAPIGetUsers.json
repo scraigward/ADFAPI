@@ -1,0 +1,23 @@
+{
+	"name": "RestAPIGetUsers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestAPIGetUsers",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pageNo": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().pageNo",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
