@@ -159,7 +159,7 @@
 							"headers": {
 								"x-api-key": "reqres-free-v1"
 							},
-							"url": "https://reqres.in/api/users"
+							"url": "https://reqres.in/api/users?page=1"
 						}
 					},
 					{
