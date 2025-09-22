@@ -1,28 +1,6 @@
 {
 	"name": "APIGET",
 	"properties": {
-		"activities": [
-			{
-				"name": "GETUSERSAPI",
-				"type": "WebActivity",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"method": "GET",
-					"headers": {
-						"x-api-key": "reqres-free-v1"
-					},
-					"url": "https://reqres.in/api/users?page=1"
-				}
-			}
-		],
 		"annotations": []
 	}
 }
