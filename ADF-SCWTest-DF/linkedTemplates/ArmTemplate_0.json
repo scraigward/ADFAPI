@@ -247,7 +247,9 @@
 														"name": "Last_Name"
 													}
 												}
-											]
+											],
+											"collectionReference": "$['data']",
+											"mapComplexValuesToString": false
 										}
 									},
 									"inputs": [
