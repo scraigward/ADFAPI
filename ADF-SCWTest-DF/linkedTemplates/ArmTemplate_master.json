@@ -23,6 +23,10 @@
 			"type": "string",
 			"defaultValue": "scw"
 		},
+		"RestAPIGetUsers_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": " https://reqres.in/api/users"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -61,6 +65,9 @@
 					},
 					"SQLServer_properties_typeProperties_userName": {
 						"value": "[parameters('SQLServer_properties_typeProperties_userName')]"
+					},
+					"RestAPIGetUsers_properties_typeProperties_url": {
+						"value": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]"
 					}
 				}
 			},

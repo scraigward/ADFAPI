@@ -16,6 +16,9 @@
 		},
 		"SQLServer_properties_typeProperties_userName": {
 			"value": "scw"
+		},
+		"RestAPIGetUsers_properties_typeProperties_url": {
+			"value": " https://reqres.in/api/users"
 		}
 	}
 }
