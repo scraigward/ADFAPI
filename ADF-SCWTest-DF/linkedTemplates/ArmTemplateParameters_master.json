@@ -5,20 +5,17 @@
 		"factoryName": {
 			"value": "ADF-SCWTest-DF"
 		},
-		"AzureSqlDatabase_password": {
+		"SQLServer_password": {
 			"value": ""
 		},
-		"AzureSqlDatabase_properties_typeProperties_server": {
+		"SQLServer_properties_typeProperties_server": {
 			"value": "adf-sql-server-testing.database.windows.net"
 		},
-		"AzureSqlDatabase_properties_typeProperties_database": {
+		"SQLServer_properties_typeProperties_database": {
 			"value": "ADF-SQL"
 		},
-		"AzureSqlDatabase_properties_typeProperties_userName": {
+		"SQLServer_properties_typeProperties_userName": {
 			"value": "scw"
-		},
-		"RestGetUsers_properties_typeProperties_url": {
-			"value": "https://reqres.in/api/users"
 		},
 		"containerUri": {
 			"value": ""
