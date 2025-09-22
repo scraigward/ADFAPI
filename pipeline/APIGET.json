@@ -68,7 +68,48 @@
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false
 								},
-								"enableStaging": false
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"path": "$['data'][0]['id']"
+											},
+											"sink": {
+												"name": "ID",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['email']"
+											},
+											"sink": {
+												"name": "Email",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['first_name']"
+											},
+											"sink": {
+												"name": "First_Name",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"path": "$['data'][0]['last_name']"
+											},
+											"sink": {
+												"name": "Last_Name",
+												"type": "String"
+											}
+										}
+									]
+								}
 							},
 							"inputs": [
 								{
