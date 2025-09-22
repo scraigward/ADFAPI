@@ -19,7 +19,7 @@
 					"headers": {
 						"x-api-key": "reqres-free-v1"
 					},
-					"url": "https://reqres.in/api/users?page=1"
+					"url": "https://reqres.in/api/users"
 				}
 			},
 			{
@@ -117,7 +117,7 @@
 									"referenceName": "RestGetUsers",
 									"type": "DatasetReference",
 									"parameters": {
-										"PageNo": {
+										"pageNo": {
 											"value": "?page=@{item()}",
 											"type": "Expression"
 										}
