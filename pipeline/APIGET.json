@@ -75,7 +75,10 @@
 									"referenceName": "RestAPIGetUsers",
 									"type": "DatasetReference",
 									"parameters": {
-										"pageNo": "?page=1"
+										"pageNo": {
+											"value": "?page=@{item()}",
+											"type": "Expression"
+										}
 									}
 								}
 							],
