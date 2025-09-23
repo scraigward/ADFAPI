@@ -244,7 +244,7 @@
 								{
 									"activity": "Copy data1",
 									"dependencyConditions": [
-										"Skipped"
+										"Completed"
 									]
 								}
 							],
