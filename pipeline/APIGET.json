@@ -36,7 +36,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@range(1,activity('APIGetUsers').output.total_pages)",
+						"value": "@range(3,activity('APIGetUsers').output.total_pages)",
 						"type": "Expression"
 					},
 					"isSequential": true,
