@@ -336,7 +336,37 @@
 												},
 												"userProperties": [],
 												"typeProperties": {
-													"storedProcedureName": "[[dbo].[LogPipelineError]"
+													"storedProcedureName": "[[dbo].[LogPipelineError]",
+													"storedProcedureParameters": {
+														"RunId": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"PipelineName": {
+															"value": {
+																"value": "@pipeline().Pipeline",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"PageNumber": {
+															"value": {
+																"value": "item()",
+																"type": "Expression"
+															},
+															"type": "Int16"
+														},
+														"ErrorMessage": {
+															"value": {
+																"value": "@activity('Copy data1').error.message",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
 												},
 												"linkedServiceName": {
 													"referenceName": "SQLServer",
