@@ -281,7 +281,7 @@
 									"type": "IfCondition",
 									"dependsOn": [
 										{
-											"activity": "Copy data1",
+											"activity": "Set variable1",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -375,6 +375,27 @@
 											}
 										]
 									}
+								},
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Copy data1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "CopyStatus",
+										"value": "@activity('Copy data1').status"
+									}
 								}
 							]
 						}
@@ -400,6 +421,9 @@
 				"variables": {
 					"ErrorLog": {
 						"type": "Array"
+					},
+					"CopyStatus": {
+						"type": "String"
 					}
 				},
 				"annotations": []
