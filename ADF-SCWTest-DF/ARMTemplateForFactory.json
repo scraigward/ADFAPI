@@ -186,6 +186,9 @@
 					},
 					"table": {
 						"type": "string"
+					},
+					"page": {
+						"type": "int"
 					}
 				},
 				"annotations": []
