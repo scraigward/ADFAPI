@@ -44,14 +44,7 @@
 						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Append variable1",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -145,13 +138,73 @@
 							]
 						},
 						{
-							"name": "Append variable1",
-							"type": "AppendVariable",
-							"dependsOn": [],
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "ErrorLog",
-								"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)"
+								"expression": {
+									"value": "@not(equals(activity('Copy data1').status, 'Succeeded'))\n",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Append variable2",
+										"type": "AppendVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "ErrorLog",
+											"value": "@concat('Page ', string(item()), ' succeeded.')"
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Append variable1",
+										"type": "AppendVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "ErrorLog",
+											"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)"
+										}
+									},
+									{
+										"name": "Stored procedure1",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Append variable1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[LogPipelineError]"
+										},
+										"linkedServiceName": {
+											"referenceName": "SQLServer",
+											"type": "LinkedServiceReference"
+										}
+									}
+								]
 							}
 						}
 					]
