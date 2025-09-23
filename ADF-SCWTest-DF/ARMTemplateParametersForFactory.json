@@ -9,7 +9,7 @@
 			"value": ""
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
-			"value": " https://reqres.in/api/users"
+			"value": " https://reqres.in/api/"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"value": "adf-sql-server-testing.database.windows.net"

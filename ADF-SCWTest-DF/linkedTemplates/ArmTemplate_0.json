@@ -13,7 +13,7 @@
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": " https://reqres.in/api/users"
+			"defaultValue": " https://reqres.in/api/"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",
@@ -81,13 +81,16 @@
 				"parameters": {
 					"pageNo": {
 						"type": "string"
+					},
+					"relativeURL": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
 					"relativeUrl": {
-						"value": "@dataset().pageNo",
+						"value": "@dataset().relativeURL",
 						"type": "Expression"
 					}
 				},
@@ -210,7 +213,7 @@
 											"mappings": [
 												{
 													"source": {
-														"path": "$['data']['id']"
+														"path": "[['id']"
 													},
 													"sink": {
 														"name": "ID",
@@ -219,7 +222,7 @@
 												},
 												{
 													"source": {
-														"path": "$['data']['email']"
+														"path": "[['email']"
 													},
 													"sink": {
 														"name": "Email",
@@ -228,7 +231,7 @@
 												},
 												{
 													"source": {
-														"path": "$['data']['first_name']"
+														"path": "[['first_name']"
 													},
 													"sink": {
 														"name": "First_Name",
@@ -237,7 +240,7 @@
 												},
 												{
 													"source": {
-														"path": "$['data']['last_name']"
+														"path": "[['last_name']"
 													},
 													"sink": {
 														"name": "Last_Name",
@@ -257,7 +260,8 @@
 												"pageNo": {
 													"value": "?page=@{item()}",
 													"type": "Expression"
-												}
+												},
+												"relativeURL": "users?page=@{item()}"
 											}
 										}
 									],
