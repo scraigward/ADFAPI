@@ -44,7 +44,14 @@
 						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Append variable1",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -136,6 +143,16 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "ErrorLog",
+								"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)"
+							}
 						}
 					]
 				}
@@ -150,6 +167,11 @@
 			},
 			"page": {
 				"type": "int"
+			}
+		},
+		"variables": {
+			"ErrorLog": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
