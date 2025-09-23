@@ -17,7 +17,7 @@
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "users?page=@{pipeline().parameters.page}",
+				"value": "@dataset().relativeURL",
 				"type": "Expression"
 			}
 		},
