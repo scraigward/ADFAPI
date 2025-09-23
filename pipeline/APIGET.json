@@ -74,7 +74,7 @@
 									"mappings": [
 										{
 											"source": {
-												"path": "$['data']['id']"
+												"path": "['id']"
 											},
 											"sink": {
 												"name": "ID",
@@ -83,7 +83,7 @@
 										},
 										{
 											"source": {
-												"path": "$['data']['email']"
+												"path": "['email']"
 											},
 											"sink": {
 												"name": "Email",
@@ -92,7 +92,7 @@
 										},
 										{
 											"source": {
-												"path": "$['data']['first_name']"
+												"path": "['first_name']"
 											},
 											"sink": {
 												"name": "First_Name",
@@ -101,7 +101,7 @@
 										},
 										{
 											"source": {
-												"path": "$['data']['last_name']"
+												"path": "['last_name']"
 											},
 											"sink": {
 												"name": "Last_Name",
@@ -121,7 +121,8 @@
 										"pageNo": {
 											"value": "?page=@{item()}",
 											"type": "Expression"
-										}
+										},
+										"relativeURL": "users?page=@{item()}"
 									}
 								}
 							],
