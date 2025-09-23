@@ -72,7 +72,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@range(1, add(activity('APIGetUsers').output.total_pages, 1))",
+								"value": "@range(1,activity('APIGetUsers').output.total_pages)",
 								"type": "Expression"
 							},
 							"isSequential": true,
@@ -172,6 +172,76 @@
 											}
 										}
 									]
+								},
+								{
+									"name": "If Condition1",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Copy data1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@not(equals(activity('Copy data1').status, 'Succeeded'))\n",
+											"type": "Expression"
+										},
+										"ifFalseActivities": [
+											{
+												"name": "Append variable2",
+												"type": "AppendVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorLog",
+													"value": "@concat('Page ', string(item()), ' succeeded.')"
+												}
+											}
+										],
+										"ifTrueActivities": [
+											{
+												"name": "Append variable1",
+												"type": "AppendVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorLog",
+													"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)"
+												}
+											},
+											{
+												"name": "Stored procedure1",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Append variable1",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[[dbo].[LogPipelineError]"
+												},
+												"linkedServiceName": {
+													"referenceName": "SQLServer",
+													"type": "LinkedServiceReference"
+												}
+											}
+										]
+									}
 								}
 							]
 						}
@@ -191,11 +261,17 @@
 						"type": "int"
 					}
 				},
+				"variables": {
+					"ErrorLog": {
+						"type": "Array"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/RestAPIGetUsers')]",
-				"[concat(variables('factoryId'), '/datasets/SQLDB')]"
+				"[concat(variables('factoryId'), '/datasets/SQLDB')]",
+				"[concat(variables('factoryId'), '/linkedServices/SQLServer')]"
 			]
 		},
 		{
