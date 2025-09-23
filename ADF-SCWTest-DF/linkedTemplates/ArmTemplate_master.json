@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SQLServer'"
 		},
+		"RestAPIGetUsers_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": " https://reqres.in/api/users"
+		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "adf-sql-server-testing.database.windows.net"
@@ -22,10 +26,6 @@
 		"SQLServer_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "scw"
-		},
-		"RestAPIGetUsers_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": " https://reqres.in/api/users"
 		},
 		"containerUri": {
 			"type": "string",
@@ -57,6 +57,9 @@
 					"SQLServer_password": {
 						"value": "[parameters('SQLServer_password')]"
 					},
+					"RestAPIGetUsers_properties_typeProperties_url": {
+						"value": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]"
+					},
 					"SQLServer_properties_typeProperties_server": {
 						"value": "[parameters('SQLServer_properties_typeProperties_server')]"
 					},
@@ -65,9 +68,6 @@
 					},
 					"SQLServer_properties_typeProperties_userName": {
 						"value": "[parameters('SQLServer_properties_typeProperties_userName')]"
-					},
-					"RestAPIGetUsers_properties_typeProperties_url": {
-						"value": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]"
 					}
 				}
 			},

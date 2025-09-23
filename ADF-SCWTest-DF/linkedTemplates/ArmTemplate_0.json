@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SQLServer'"
 		},
+		"RestAPIGetUsers_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": " https://reqres.in/api/users"
+		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "adf-sql-server-testing.database.windows.net"
@@ -22,16 +26,27 @@
 		"SQLServer_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "scw"
-		},
-		"RestAPIGetUsers_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": " https://reqres.in/api/users"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQLServer')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -49,27 +64,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('SQLServer_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"X-API-Key": {
-							"type": "SecureString",
-							"value": "reqres-free-v1"
-						}
 					}
 				}
 			},
@@ -216,7 +210,7 @@
 											"mappings": [
 												{
 													"source": {
-														"path": "$['data'][0]['id']"
+														"path": "$['data']['id']"
 													},
 													"sink": {
 														"name": "ID",
@@ -225,7 +219,7 @@
 												},
 												{
 													"source": {
-														"path": "$['data'][0]['email']"
+														"path": "$['data']['email']"
 													},
 													"sink": {
 														"name": "Email",
@@ -234,7 +228,7 @@
 												},
 												{
 													"source": {
-														"path": "$['data'][0]['first_name']"
+														"path": "$['data']['first_name']"
 													},
 													"sink": {
 														"name": "First_Name",
@@ -243,14 +237,16 @@
 												},
 												{
 													"source": {
-														"path": "$['data'][0]['last_name']"
+														"path": "$['data']['last_name']"
 													},
 													"sink": {
 														"name": "Last_Name",
 														"type": "String"
 													}
 												}
-											]
+											],
+											"collectionReference": "$['data']",
+											"mapComplexValuesToString": true
 										}
 									},
 									"inputs": [
