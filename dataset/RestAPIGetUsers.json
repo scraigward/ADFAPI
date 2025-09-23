@@ -8,13 +8,16 @@
 		"parameters": {
 			"pageNo": {
 				"type": "string"
+			},
+			"relativeURL": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "@dataset().pageNo",
+				"value": "users?page=@{pipeline().parameters.page}",
 				"type": "Expression"
 			}
 		},
