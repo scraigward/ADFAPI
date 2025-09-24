@@ -257,7 +257,7 @@
 														},
 														"PageNumber": {
 															"value": {
-																"value": "item()",
+																"value": "@item()",
 																"type": "Expression"
 															},
 															"type": "Int16"
