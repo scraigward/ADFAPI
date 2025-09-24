@@ -13,7 +13,7 @@
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": " https://reqres.in/api/"
+			"defaultValue": "@{linkedService().BaseUrl}"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",

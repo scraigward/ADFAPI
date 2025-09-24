@@ -13,7 +13,7 @@
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": " https://reqres.in/api/"
+			"defaultValue": "@{linkedService().BaseUrl}"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",
@@ -55,7 +55,10 @@
 							"headers": {
 								"x-api-key": "reqres-free-v1"
 							},
-							"url": "https://reqres.in/api/users?page=1"
+							"url": {
+								"value": "@pipeline().parameters.BaseURL",
+								"type": "Expression"
+							}
 						}
 					},
 					{
@@ -311,17 +314,21 @@
 					"elapsedTimeMetric": {}
 				},
 				"parameters": {
-					"schema": {
+					"Schema": {
 						"type": "string",
 						"defaultValue": "dbo"
 					},
-					"table": {
+					"Table": {
 						"type": "string",
-						"defaultValue": "users"
+						"defaultValue": "Users"
 					},
-					"page": {
+					"StartPageNo": {
 						"type": "int",
 						"defaultValue": 1
+					},
+					"BaseURL": {
+						"type": "string",
+						"defaultValue": "https://reqres.in/api/users"
 					}
 				},
 				"variables": {
@@ -411,6 +418,11 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"parameters": {
+					"BaseURL": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "RestService",
 				"typeProperties": {
