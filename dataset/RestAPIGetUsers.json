@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference",
 			"parameters": {
 				"BaseURL": {
-					"value": "@dataset().PageNo",
+					"value": "@linkedService().BaseURL",
 					"type": "Expression"
 				}
 			}
