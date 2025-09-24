@@ -81,7 +81,7 @@
 							"isSequential": true,
 							"activities": [
 								{
-									"name": "Copy data1",
+									"name": "CopyAPIData",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -177,11 +177,11 @@
 									]
 								},
 								{
-									"name": "If Condition1",
+									"name": "If_CopyFailed",
 									"type": "IfCondition",
 									"dependsOn": [
 										{
-											"activity": "Set variable1",
+											"activity": "Set_CopyStatus",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -210,24 +210,24 @@
 										],
 										"ifTrueActivities": [
 											{
-												"name": "Append variable1",
+												"name": "Append_ErrorLog",
 												"type": "AppendVariable",
 												"dependsOn": [],
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorLog",
 													"value": {
-														"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)",
+														"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').error.message)",
 														"type": "Expression"
 													}
 												}
 											},
 											{
-												"name": "Stored procedure1",
+												"name": "SP_LogError",
 												"type": "SqlServerStoredProcedure",
 												"dependsOn": [
 													{
-														"activity": "Append variable1",
+														"activity": "Append_ErrorLog",
 														"dependencyConditions": [
 															"Succeeded"
 														]
@@ -267,7 +267,7 @@
 														},
 														"ErrorMessage": {
 															"value": {
-																"value": "@activity('Copy data1').error.message",
+																"value": "@activity('CopyAPIData').error.message",
 																"type": "Expression"
 															},
 															"type": "String"
@@ -283,11 +283,11 @@
 									}
 								},
 								{
-									"name": "Set variable1",
+									"name": "Set_CopyStatus",
 									"type": "SetVariable",
 									"dependsOn": [
 										{
-											"activity": "Copy data1",
+											"activity": "CopyAPIData",
 											"dependencyConditions": [
 												"Completed"
 											]
@@ -301,7 +301,7 @@
 									"typeProperties": {
 										"variableName": "CopyStatus",
 										"value": {
-											"value": "@activity('Copy data1').status",
+											"value": "@activity('CopyAPIData').status",
 											"type": "Expression"
 										}
 									}
