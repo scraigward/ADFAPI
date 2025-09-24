@@ -86,11 +86,18 @@
 					"referenceName": "RestAPIGetUsers",
 					"type": "LinkedServiceReference",
 					"parameters": {
+						"BaseURL": {
+							"value": "@dataset().BaseURL\n",
+							"type": "Expression"
+						},
 						"PageNo": "?page=@{item()}"
 					}
 				},
 				"parameters": {
 					"PageNo": {
+						"type": "string"
+					},
+					"BaseURL": {
 						"type": "string"
 					}
 				},
@@ -266,7 +273,8 @@
 												"PageNo": {
 													"value": "?page=@{item()}",
 													"type": "Expression"
-												}
+												},
+												"BaseURL": "@pipeline().parameters.BaseURL"
 											}
 										}
 									],
