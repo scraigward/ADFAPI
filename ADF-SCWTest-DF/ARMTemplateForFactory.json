@@ -366,7 +366,10 @@
 							"value": "@dataset().BaseURL\n",
 							"type": "Expression"
 						},
-						"PageNo": "?page=@{item()}"
+						"PageNo": {
+							"value": "?page=1",
+							"type": "Expression"
+						}
 					}
 				},
 				"parameters": {
