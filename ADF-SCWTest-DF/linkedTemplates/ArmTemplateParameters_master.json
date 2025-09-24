@@ -9,7 +9,7 @@
 			"value": ""
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
-			"value": "@linkedService().BaseURL"
+			"value": "@{linkedService().BaseURL}"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"value": "adf-sql-server-testing.database.windows.net"
