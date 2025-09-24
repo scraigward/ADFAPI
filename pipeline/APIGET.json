@@ -45,7 +45,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "CopyAPIData",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -141,11 +141,11 @@
 							]
 						},
 						{
-							"name": "If Condition1",
+							"name": "If_CopyFailed",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Set variable1",
+									"activity": "Set_CopyStatus",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -247,11 +247,11 @@
 							}
 						},
 						{
-							"name": "Set variable1",
+							"name": "Set_CopyStatus",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Copy data1",
+									"activity": "CopyAPIData",
 									"dependencyConditions": [
 										"Completed"
 									]
@@ -265,7 +265,7 @@
 							"typeProperties": {
 								"variableName": "CopyStatus",
 								"value": {
-									"value": "@activity('Copy data1').status",
+									"value": "@activity('CopyAPIData').status",
 									"type": "Expression"
 								}
 							}
