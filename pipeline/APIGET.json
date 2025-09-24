@@ -272,17 +272,21 @@
 			}
 		],
 		"parameters": {
-			"schema": {
+			"Schema": {
 				"type": "string",
 				"defaultValue": "dbo"
 			},
-			"table": {
+			"Table": {
 				"type": "string",
-				"defaultValue": "users"
+				"defaultValue": "Users"
 			},
-			"page": {
+			"StartPageNo": {
 				"type": "int",
 				"defaultValue": 1
+			},
+			"BaseURL": {
+				"type": "string",
+				"defaultValue": "https://reqres.in/api/users"
 			}
 		},
 		"variables": {
