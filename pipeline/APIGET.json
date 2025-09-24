@@ -160,7 +160,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@or(\n  not(equals(activity('CopyAPIData').output.status, 'Succeeded')),\n  less(activity('CopyAPIData').output.rowsCopied, 1)\n)",
+									"value": "@or(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  less(activity('CopyAPIData').output.rowsCopied, 1)\n)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
