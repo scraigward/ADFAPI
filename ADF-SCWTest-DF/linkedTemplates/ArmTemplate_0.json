@@ -436,7 +436,7 @@
 					},
 					"BaseURL": {
 						"type": "string",
-						"defaultValue": "https://reqres.in/api/users"
+						"defaultValue": "https://reqres.in/api/users?Page="
 					}
 				},
 				"variables": {
