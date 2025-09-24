@@ -75,7 +75,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@range(activity('APIGetUsers').output.total_pages + 1, activity('APIGetUsers').output.total_pages + 2)",
+								"value": "@range(5,activity('APIGetUsers').output.total_pages)",
 								"type": "Expression"
 							},
 							"isSequential": true,
@@ -170,8 +170,14 @@
 											"referenceName": "SQLDB",
 											"type": "DatasetReference",
 											"parameters": {
-												"Schema": "dbo",
-												"Table": "users"
+												"Schema": {
+													"value": "@pipeline().parameters.Schema",
+													"type": "Expression"
+												},
+												"Table": {
+													"value": "@pipeline().parameters.Table",
+													"type": "Expression"
+												}
 											}
 										}
 									]
