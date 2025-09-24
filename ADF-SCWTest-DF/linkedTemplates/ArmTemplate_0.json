@@ -13,7 +13,7 @@
 		},
 		"RestAPIGetUsers_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://reqres.in/api/users"
+			"defaultValue": "@linkedService().BaseURL"
 		},
 		"SQLServer_properties_typeProperties_server": {
 			"type": "string",
@@ -86,10 +86,7 @@
 					"referenceName": "RestAPIGetUsers",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"BaseURL": {
-							"value": "@dataset().PageNo",
-							"type": "Expression"
-						}
+						"PageNo": "?page=@{item()}"
 					}
 				},
 				"parameters": {
@@ -267,7 +264,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"PageNo": {
-													"value": "PageNo = ?page=1",
+													"value": "?page=@{item()}",
 													"type": "Expression"
 												}
 											}
