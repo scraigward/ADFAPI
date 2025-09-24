@@ -5,6 +5,10 @@
 			"referenceName": "RestAPIGetUsers",
 			"type": "LinkedServiceReference",
 			"parameters": {
+				"BaseURL": {
+					"value": "@pipeline().parameters.BaseURL",
+					"type": "Expression"
+				},
 				"PageNo": "?page=@{item()}"
 			}
 		},
