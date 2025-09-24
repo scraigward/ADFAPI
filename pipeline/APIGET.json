@@ -124,10 +124,6 @@
 										"PageNo": {
 											"value": "?page=@{item()}",
 											"type": "Expression"
-										},
-										"RelativeURL": {
-											"value": "?page=@{pipeline().parameters.StartPageNo}",
-											"type": "Expression"
 										}
 									}
 								}
