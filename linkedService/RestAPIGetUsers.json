@@ -4,6 +4,9 @@
 		"parameters": {
 			"BaseURL": {
 				"type": "string"
+			},
+			"PageNo": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
