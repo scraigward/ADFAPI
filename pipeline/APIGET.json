@@ -267,7 +267,10 @@
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "ErrorMessage",
-											"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0].message,\n  'No error message'\n)"
+											"value": {
+												"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+												"type": "Expression"
+											}
 										}
 									}
 								]
