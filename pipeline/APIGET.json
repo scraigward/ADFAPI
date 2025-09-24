@@ -182,12 +182,19 @@
 									{
 										"name": "Append_ErrorLog",
 										"type": "AppendVariable",
-										"dependsOn": [],
+										"dependsOn": [
+											{
+												"activity": "Set_ErrorMessage",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "ErrorLog",
 											"value": {
-												"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').error.message)",
+												"value": "@concat('Page ', string(item()), ' failed. Error: ', variables('ErrorMessage'))",
 												"type": "Expression"
 											}
 										}
@@ -248,6 +255,20 @@
 											"referenceName": "SQLServer",
 											"type": "LinkedServiceReference"
 										}
+									},
+									{
+										"name": "Set_ErrorMessage",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "ErrorMessage",
+											"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0].message,\n  'No error message'\n)"
+										}
 									}
 								]
 							}
@@ -303,6 +324,9 @@
 				"type": "Array"
 			},
 			"CopyStatus": {
+				"type": "String"
+			},
+			"ErrorMessage": {
 				"type": "String"
 			}
 		},
