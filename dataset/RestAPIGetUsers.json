@@ -3,7 +3,13 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "RestAPIGetUsers",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"BaseURL": {
+					"value": "@dataset().RelativeURL",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"PageNo": {
