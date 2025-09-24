@@ -18,6 +18,10 @@
 					"method": "GET",
 					"headers": {
 						"x-api-key": "reqres-free-v1"
+					},
+					"url": {
+						"value": "@pipeline().parameters.BaseURL",
+						"type": "Expression"
 					}
 				}
 			},
