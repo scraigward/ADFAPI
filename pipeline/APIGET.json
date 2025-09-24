@@ -160,7 +160,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+									"value": "@or(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  equals(activity('CopyAPIData').output.rowsCopied, 0)\n)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
@@ -268,7 +268,7 @@
 										"typeProperties": {
 											"variableName": "ErrorMessage",
 											"value": {
-												"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').output.errors[0]['message']),\n  concat('Page ', string(item()), ' returned no data.')\n)",
+												"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
 												"type": "Expression"
 											}
 										}
