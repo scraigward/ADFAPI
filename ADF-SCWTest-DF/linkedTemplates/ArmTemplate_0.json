@@ -188,7 +188,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@range(5,activity('APIGetUsers').output.total_pages)",
+								"value": "@range(1, 2)\n",
 								"type": "Expression"
 							},
 							"isSequential": true,
