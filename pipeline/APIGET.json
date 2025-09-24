@@ -134,8 +134,14 @@
 									"referenceName": "SQLDB",
 									"type": "DatasetReference",
 									"parameters": {
-										"Schema": "dbo",
-										"Table": "users"
+										"Schema": {
+											"value": "@pipeline().parameters.Schema",
+											"type": "Expression"
+										},
+										"Table": {
+											"value": "@pipeline().parameters.Table",
+											"type": "Expression"
+										}
 									}
 								}
 							]
