@@ -121,11 +121,11 @@
 									"referenceName": "RestAPIGetUsers",
 									"type": "DatasetReference",
 									"parameters": {
-										"pageNo": {
+										"PageNo": {
 											"value": "?page=@{item()}",
 											"type": "Expression"
 										},
-										"relativeURL": "users?page=@{item()}"
+										"RelativeURL": "users?page=@{item()}"
 									}
 								}
 							],
@@ -134,8 +134,8 @@
 									"referenceName": "SQLDB",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": "dbo",
-										"table": "users"
+										"Schema": "dbo",
+										"Table": "users"
 									}
 								}
 							]
