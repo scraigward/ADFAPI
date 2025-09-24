@@ -25,6 +25,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "@dataset().PageNo"
+		},
 		"schema": []
 	}
 }
