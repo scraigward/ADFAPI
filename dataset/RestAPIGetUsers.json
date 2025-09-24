@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference",
 			"parameters": {
 				"BaseURL": {
-					"value": "@pipeline().parameters.BaseURL",
+					"value": "@dataset().BaseURL\n",
 					"type": "Expression"
 				},
 				"PageNo": "?page=@{item()}"
