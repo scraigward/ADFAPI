@@ -14,19 +14,10 @@
 		"parameters": {
 			"PageNo": {
 				"type": "string"
-			},
-			"RelativeURL": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "RestResource",
-		"typeProperties": {
-			"relativeUrl": {
-				"value": "@dataset().RelativeURL",
-				"type": "Expression"
-			}
-		},
 		"schema": []
 	}
 }
