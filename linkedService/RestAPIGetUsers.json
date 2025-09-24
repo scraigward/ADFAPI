@@ -12,7 +12,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "@{linkedService().BaseURL}",
+			"url": "https://reqres.in/api/users",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
