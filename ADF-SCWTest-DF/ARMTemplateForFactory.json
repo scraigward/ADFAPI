@@ -157,11 +157,11 @@
 											"referenceName": "RestAPIGetUsers",
 											"type": "DatasetReference",
 											"parameters": {
-												"pageNo": {
+												"PageNo": {
 													"value": "?page=@{item()}",
 													"type": "Expression"
 												},
-												"relativeURL": "users?page=@{item()}"
+												"RelativeURL": "users?page=@{item()}"
 											}
 										}
 									],
@@ -170,8 +170,8 @@
 											"referenceName": "SQLDB",
 											"type": "DatasetReference",
 											"parameters": {
-												"schema": "dbo",
-												"table": "users"
+												"Schema": "dbo",
+												"Table": "users"
 											}
 										}
 									]
@@ -354,13 +354,19 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "RestAPIGetUsers",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"BaseURL": {
+							"value": "@dataset().RelativeURL",
+							"type": "Expression"
+						}
+					}
 				},
 				"parameters": {
-					"pageNo": {
+					"PageNo": {
 						"type": "string"
 					},
-					"relativeURL": {
+					"RelativeURL": {
 						"type": "string"
 					}
 				},
@@ -368,7 +374,7 @@
 				"type": "RestResource",
 				"typeProperties": {
 					"relativeUrl": {
-						"value": "@dataset().relativeURL",
+						"value": "@dataset().RelativeURL",
 						"type": "Expression"
 					}
 				},
@@ -388,10 +394,10 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"schema": {
+					"Schema": {
 						"type": "string"
 					},
-					"table": {
+					"Table": {
 						"type": "string"
 					}
 				},
@@ -400,11 +406,11 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": {
-						"value": "@dataset().schema",
+						"value": "@dataset().Schema",
 						"type": "Expression"
 					},
 					"table": {
-						"value": "@dataset().table",
+						"value": "@dataset().Table",
 						"type": "Expression"
 					}
 				}
