@@ -1,6 +1,11 @@
 {
 	"name": "RestAPIGetUsers",
 	"properties": {
+		"parameters": {
+			"BaseURL": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
