@@ -125,7 +125,10 @@
 											"value": "?page=@{item()}",
 											"type": "Expression"
 										},
-										"RelativeURL": "users?page=@{item()}"
+										"RelativeURL": {
+											"value": "?page=@{pipeline().parameters.StartPageNo}",
+											"type": "Expression"
+										}
 									}
 								}
 							],
