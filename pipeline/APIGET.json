@@ -174,24 +174,24 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Append variable1",
+										"name": "Append_ErrorLog",
 										"type": "AppendVariable",
 										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "ErrorLog",
 											"value": {
-												"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)",
+												"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').error.message)",
 												"type": "Expression"
 											}
 										}
 									},
 									{
-										"name": "Stored procedure1",
+										"name": "SP_LogError",
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [
 											{
-												"activity": "Append variable1",
+												"activity": "Append_ErrorLog",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -231,7 +231,7 @@
 												},
 												"ErrorMessage": {
 													"value": {
-														"value": "@activity('Copy data1').error.message",
+														"value": "@activity('CopyAPIData').error.message",
 														"type": "Expression"
 													},
 													"type": "String"
