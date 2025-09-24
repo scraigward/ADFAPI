@@ -374,7 +374,7 @@
 				},
 				"parameters": {
 					"PageNo": {
-						"type": "string"
+						"type": "int"
 					},
 					"BaseURL": {
 						"type": "string"
@@ -382,7 +382,12 @@
 				},
 				"annotations": [],
 				"type": "RestResource",
-				"typeProperties": {},
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "@string(dataset().PageNo)",
+						"type": "Expression"
+					}
+				},
 				"schema": []
 			},
 			"dependsOn": [
