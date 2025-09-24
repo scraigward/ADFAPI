@@ -122,7 +122,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"PageNo": {
-											"value": "PageNo = ?page=1",
+											"value": "?page=@{item()}",
 											"type": "Expression"
 										}
 									}
