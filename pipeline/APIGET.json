@@ -292,7 +292,7 @@
 			},
 			"BaseURL": {
 				"type": "string",
-				"defaultValue": "https://reqres.in/api/users?Page="
+				"defaultValue": "https://reqres.in/api/users"
 			}
 		},
 		"variables": {
