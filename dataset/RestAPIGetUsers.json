@@ -17,7 +17,7 @@
 		},
 		"parameters": {
 			"PageNo": {
-				"type": "string"
+				"type": "int"
 			},
 			"BaseURL": {
 				"type": "string"
