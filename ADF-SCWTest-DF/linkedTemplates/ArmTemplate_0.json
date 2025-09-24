@@ -290,7 +290,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@not(equals(activity('Copy data1').status, 'Succeeded'))\n",
+											"value": "@not(equals(variables('CopyStatus'), 'Succeeded'))\n",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
@@ -301,7 +301,10 @@
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorLog",
-													"value": "@concat('Page ', string(item()), ' succeeded.')"
+													"value": {
+														"value": "@concat('Page ', string(item()), ' succeeded.')",
+														"type": "Expression"
+													}
 												}
 											}
 										],
@@ -313,7 +316,10 @@
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorLog",
-													"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)"
+													"value": {
+														"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('Copy data1').error.message)",
+														"type": "Expression"
+													}
 												}
 											},
 											{
@@ -394,7 +400,10 @@
 									"userProperties": [],
 									"typeProperties": {
 										"variableName": "CopyStatus",
-										"value": "@activity('Copy data1').status"
+										"value": {
+											"value": "@activity('Copy data1').status",
+											"type": "Expression"
+										}
 									}
 								}
 							]
