@@ -161,7 +161,10 @@
 													"value": "?page=@{item()}",
 													"type": "Expression"
 												},
-												"RelativeURL": "users?page=@{item()}"
+												"RelativeURL": {
+													"value": "?page=@{pipeline().parameters.StartPageNo}",
+													"type": "Expression"
+												}
 											}
 										}
 									],
@@ -328,7 +331,7 @@
 					},
 					"BaseURL": {
 						"type": "string",
-						"defaultValue": "https://reqres.in/api/users?Page="
+						"defaultValue": "https://reqres.in/api/users"
 					}
 				},
 				"variables": {
