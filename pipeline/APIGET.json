@@ -124,7 +124,8 @@
 										"PageNo": {
 											"value": "?page=@{item()}",
 											"type": "Expression"
-										}
+										},
+										"BaseURL": "@pipeline().parameters.BaseURL"
 									}
 								}
 							],
