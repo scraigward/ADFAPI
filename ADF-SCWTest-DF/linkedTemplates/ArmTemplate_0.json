@@ -84,7 +84,7 @@
 					"type": "LinkedServiceReference",
 					"parameters": {
 						"BaseURL": {
-							"value": "@dataset().RelativeURL",
+							"value": "@dataset().PageNo",
 							"type": "Expression"
 						}
 					}
@@ -92,19 +92,11 @@
 				"parameters": {
 					"PageNo": {
 						"type": "string"
-					},
-					"RelativeURL": {
-						"type": "string"
 					}
 				},
 				"annotations": [],
 				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": {
-						"value": "@dataset().RelativeURL",
-						"type": "Expression"
-					}
-				},
+				"typeProperties": {},
 				"schema": []
 			},
 			"dependsOn": [
@@ -273,10 +265,6 @@
 											"parameters": {
 												"PageNo": {
 													"value": "?page=@{item()}",
-													"type": "Expression"
-												},
-												"RelativeURL": {
-													"value": "?page=@{pipeline().parameters.StartPageNo}",
 													"type": "Expression"
 												}
 											}
