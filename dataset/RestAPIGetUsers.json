@@ -26,7 +26,10 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "@dataset().PageNo"
+			"relativeUrl": {
+				"value": "@string(dataset().PageNo)",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}
