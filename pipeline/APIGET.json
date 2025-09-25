@@ -365,7 +365,7 @@
 										"typeProperties": {
 											"variableName": "InfoLog",
 											"value": {
-												"value": "@concat('Page ', string(item()), ' returned no data.')",
+												"value": "@variables('InfoMessage')",
 												"type": "Expression"
 											}
 										}
