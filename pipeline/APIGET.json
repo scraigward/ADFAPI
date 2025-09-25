@@ -295,7 +295,7 @@
 							"typeProperties": {
 								"variableName": "CopyStatus",
 								"value": {
-									"value": "@if(@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), 'Failed', 'Success'\n)",
+									"value": "@if(greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), 'Failed', 'Success')",
 									"type": "Expression"
 								}
 							}
