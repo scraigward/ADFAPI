@@ -100,13 +100,7 @@
 							"outputs": [
 								{
 									"referenceName": "RestAPIPOSTUsers",
-									"type": "DatasetReference",
-									"parameters": {
-										"ID": "ID",
-										"Email": "Email",
-										"First_Name": "First_Name",
-										"Last_Name": "Last_Name"
-									}
+									"type": "DatasetReference"
 								}
 							]
 						},
@@ -240,6 +234,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"BaseURL": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"CopyStatus": {
 				"type": "String"

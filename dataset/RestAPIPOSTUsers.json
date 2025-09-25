@@ -1,6 +1,10 @@
 {
 	"name": "RestAPIPOSTUsers",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestAPIGetUsers",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
