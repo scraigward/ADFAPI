@@ -268,7 +268,7 @@
 										"typeProperties": {
 											"variableName": "ErrorMessage",
 											"value": {
-												"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+												"value": "@if(greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), activity('CopyAPIData').output.errors[0]['message'], 'No error message')",
 												"type": "Expression"
 											}
 										}
@@ -283,7 +283,7 @@
 								{
 									"activity": "CopyAPIData",
 									"dependencyConditions": [
-										"Completed"
+										"Succeeded"
 									]
 								}
 							],
@@ -404,6 +404,12 @@
 			},
 			"ErrorMessage": {
 				"type": "String"
+			},
+			"InfoMessage": {
+				"type": "String"
+			},
+			"InfoLog": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
