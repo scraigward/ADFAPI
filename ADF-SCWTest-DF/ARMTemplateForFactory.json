@@ -33,127 +33,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RestAPIGetUsers",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"BaseURL": {
-							"value": "@dataset().BaseURL\n",
-							"type": "Expression"
-						},
-						"PageNo": {
-							"value": "@dataset().PageNo",
-							"type": "Expression"
-						}
-					}
-				},
-				"parameters": {
-					"PageNo": {
-						"type": "int"
-					},
-					"BaseURL": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": {
-						"value": "@string(dataset().PageNo)",
-						"type": "Expression"
-					}
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/RestAPIGetUsers')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLDB')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLServer",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"Schema": {
-						"type": "string"
-					},
-					"Table": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().Schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().Table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLServer')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"BaseURL": {
-						"type": "string"
-					},
-					"PageNo": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLServer')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('SQLServer_properties_typeProperties_server')]",
-					"database": "[parameters('SQLServer_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('SQLServer_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SQLServer_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/APIGET')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -631,48 +510,7 @@
 											"writeBatchSize": 10000,
 											"httpCompressionType": "none"
 										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"mappings": [
-												{
-													"source": {
-														"name": "ID",
-														"type": "Int32"
-													},
-													"sink": {
-														"path": "$['ID']"
-													}
-												},
-												{
-													"source": {
-														"name": "Email",
-														"type": "String"
-													},
-													"sink": {
-														"path": "$['Email']"
-													}
-												},
-												{
-													"source": {
-														"name": "First_Name",
-														"type": "String"
-													},
-													"sink": {
-														"path": "$['First_Name']"
-													}
-												},
-												{
-													"source": {
-														"name": "Last_Name",
-														"type": "String"
-													},
-													"sink": {
-														"path": "$['Last_Name']"
-													}
-												}
-											]
-										}
+										"enableStaging": false
 									},
 									"inputs": [
 										{
@@ -688,7 +526,11 @@
 										{
 											"referenceName": "RestAPIPOSTUsers",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"First_Name": "@item().First_Name",
+												"Last_Name": "@item().Last_Name",
+												"Email": "@item().Email"
+											}
 										}
 									]
 								},
@@ -827,7 +669,8 @@
 				},
 				"parameters": {
 					"BaseURL": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "https://reqres.in/api/users"
 					}
 				},
 				"variables": {
@@ -847,6 +690,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestAPIGetUsers",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"BaseURL": {
+							"value": "@dataset().BaseURL\n",
+							"type": "Expression"
+						},
+						"PageNo": {
+							"value": "@dataset().PageNo",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"PageNo": {
+						"type": "int"
+					},
+					"BaseURL": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "@string(dataset().PageNo)",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RestAPIGetUsers')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/RestAPIPOSTUsers')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -856,13 +740,24 @@
 					"type": "LinkedServiceReference",
 					"parameters": {}
 				},
+				"parameters": {
+					"First_Name": {
+						"type": "String"
+					},
+					"Last_Name": {
+						"type": "String"
+					},
+					"Email": {
+						"type": "String"
+					}
+				},
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
 					"relativeUrl": "users",
 					"requestMethod": "POST",
 					"requestBody": {
-						"value": "@json(concat('{\"name\":\"', item().First_Name, ' ', item().Last_Name, '\",\"job\":\"', item().Email, '\"}'))",
+						"value": "@json(concat('{\"name\":\"', dataset().First_Name, ' ', dataset().Last_Name, '\",\"job\":\"', dataset().Email, '\"}'))",
 						"type": "Expression"
 					}
 				}
@@ -870,6 +765,86 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/RestAPIGetUsers')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLDB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLServer",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Schema": {
+						"type": "string"
+					},
+					"Table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().Table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestAPIGetUsers')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"BaseURL": {
+						"type": "string"
+					},
+					"PageNo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('SQLServer_properties_typeProperties_server')]",
+					"database": "[parameters('SQLServer_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SQLServer_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SQLServer_password')]"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
