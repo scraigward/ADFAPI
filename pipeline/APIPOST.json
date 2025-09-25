@@ -50,34 +50,38 @@
 									"mappings": [
 										{
 											"source": {
-												"name": "ID"
+												"name": "ID",
+												"type": "Int32"
 											},
 											"sink": {
-												"name": "id"
+												"path": "$['ID']"
 											}
 										},
 										{
 											"source": {
-												"name": "Email"
+												"name": "Email",
+												"type": "String"
 											},
 											"sink": {
-												"name": "email"
+												"path": "$['Email']"
 											}
 										},
 										{
 											"source": {
-												"name": "First_Name"
+												"name": "First_Name",
+												"type": "String"
 											},
 											"sink": {
-												"name": "first_name"
+												"path": "$['First_Name']"
 											}
 										},
 										{
 											"source": {
-												"name": "Last_Name"
+												"name": "Last_Name",
+												"type": "String"
 											},
 											"sink": {
-												"name": "last_name"
+												"path": "$['Last_Name']"
 											}
 										}
 									]
@@ -90,6 +94,18 @@
 									"parameters": {
 										"Schema": "dbo",
 										"Table": "Users"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "RestAPIPOSTUsers",
+									"type": "DatasetReference",
+									"parameters": {
+										"ID": "ID",
+										"Email": "Email",
+										"First_Name": "First_Name",
+										"Last_Name": "Last_Name"
 									}
 								}
 							]
