@@ -44,48 +44,7 @@
 									"writeBatchSize": 10000,
 									"httpCompressionType": "none"
 								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"name": "ID",
-												"type": "Int32"
-											},
-											"sink": {
-												"path": "$['ID']"
-											}
-										},
-										{
-											"source": {
-												"name": "Email",
-												"type": "String"
-											},
-											"sink": {
-												"path": "$['Email']"
-											}
-										},
-										{
-											"source": {
-												"name": "First_Name",
-												"type": "String"
-											},
-											"sink": {
-												"path": "$['First_Name']"
-											}
-										},
-										{
-											"source": {
-												"name": "Last_Name",
-												"type": "String"
-											},
-											"sink": {
-												"path": "$['Last_Name']"
-											}
-										}
-									]
-								}
+								"enableStaging": false
 							},
 							"inputs": [
 								{
