@@ -410,6 +410,9 @@
 			},
 			"InfoLog": {
 				"type": "Array"
+			},
+			"SuccessLog": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
