@@ -317,7 +317,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+											"value": "@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0)",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
