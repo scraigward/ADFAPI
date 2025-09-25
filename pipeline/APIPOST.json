@@ -1,0 +1,229 @@
+{
+	"name": "APIPOST",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_Users",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetUsersFromSQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetUsersFromSQL').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "CopyUserToReqRes",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "TabularSource"
+								},
+								"sink": {
+									"type": "RestSink",
+									"httpRequestTimeout": "00:05:00",
+									"requestInterval": 10,
+									"requestMethod": "POST",
+									"writeBatchSize": 10000,
+									"httpCompressionType": "none"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "ID"
+											},
+											"sink": {
+												"name": "id"
+											}
+										},
+										{
+											"source": {
+												"name": "Email"
+											},
+											"sink": {
+												"name": "email"
+											}
+										},
+										{
+											"source": {
+												"name": "First_Name"
+											},
+											"sink": {
+												"name": "first_name"
+											}
+										},
+										{
+											"source": {
+												"name": "Last_Name"
+											},
+											"sink": {
+												"name": "last_name"
+											}
+										}
+									]
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SQLDB",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "dbo",
+										"Table": "Users"
+									}
+								}
+							]
+						},
+						{
+							"name": "Set_CopyStatus",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "CopyUserToReqRes",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "CopyStatus",
+								"value": {
+									"value": "@if(greater(length(coalesce(activity('CopyUserToReqRes').output.errors, [])),0),'Failed','Success')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If_CopyFailed",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Set_CopyStatus",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(length(coalesce(activity('CopyUserToReqRes').output.errors, [])), 0)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "LogError_SP",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[LogPipelineError]",
+											"storedProcedureParameters": {
+												"RunId": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"PipelineName": {
+													"value": {
+														"value": "@pipeline().Pipeline",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"PageNumber": {
+													"value": {
+														"value": "@item().ID",
+														"type": "Expression"
+													},
+													"type": "Int16"
+												},
+												"ErrorMessage": {
+													"value": {
+														"value": "@string(activity('CopyUserToReqRes').output.errors[0]['message'])",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "SQLServer",
+											"type": "LinkedServiceReference"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "GetUsersFromSQL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": "SELECT ID, Email, First_Name, Last_Name FROM dbo.Users",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				},
+				"dataset": {
+					"referenceName": "SQLDB",
+					"type": "DatasetReference"
+				}
+			}
+		],
+		"variables": {
+			"CopyStatus": {
+				"type": "String"
+			},
+			"ErrorLog": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	}
+}

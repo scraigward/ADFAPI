@@ -1,5 +1,5 @@
 {
-	"name": "RestResource1",
+	"name": "RestAPIPOSTUsers",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "RestAPIGetUsers",
