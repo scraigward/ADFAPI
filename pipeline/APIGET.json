@@ -39,7 +39,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@range(pipeline().parameters.StartPageNo, add(activity('APIGetUsers').output.total_pages, 1))",
+						"value": "@range(1, 2)",
 						"type": "Expression"
 					},
 					"isSequential": true,
