@@ -3,10 +3,7 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "RestAPIGetUsers",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"BaseURL": "@dataset().BaseURL"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"parameters": {
 			"ID": {
@@ -20,9 +17,6 @@
 			},
 			"Last_Name": {
 				"type": "String"
-			},
-			"BaseURL": {
-				"type": "string"
 			}
 		},
 		"annotations": [],
