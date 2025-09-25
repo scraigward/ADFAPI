@@ -11,7 +11,7 @@
 			"relativeUrl": "users",
 			"requestMethod": "POST",
 			"requestBody": {
-				"value": "@json(concat('{\"name\":\"', item().First_Name, ' ', item().Last_Name, '\",\"job\":\"', item().Email, '\"}'))",
+				"value": "\"requestBody\": {\n  \"type\": \"Expression\",\n  \"value\": \"@json(concat('{\\\"name\\\":\\\"', dataset().First_Name, ' ', dataset().Last_Name, '\\\",\\\"job\\\":\\\"', dataset().Email, '\\\"}'))\"\n}\n",
 				"type": "Expression"
 			}
 		}
