@@ -343,7 +343,7 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "ErrorMessage",
+											"variableName": "InfoMessage",
 											"value": {
 												"value": "@concat('Page ', string(item()), ' returned no data.')",
 												"type": "Expression"
@@ -363,7 +363,7 @@
 										],
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "ErrorLog",
+											"variableName": "InfoLog",
 											"value": {
 												"value": "@concat('Page ', string(item()), ' returned no data.')",
 												"type": "Expression"
