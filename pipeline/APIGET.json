@@ -160,7 +160,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@or(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  equals(activity('CopyAPIData').output.rowsCopied, 0)\n)",
+									"value": "@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
