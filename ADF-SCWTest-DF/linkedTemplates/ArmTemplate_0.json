@@ -50,13 +50,7 @@
 				"typeProperties": {
 					"url": "[parameters('RestAPIGetUsers_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"x-api-key": {
-							"type": "SecureString",
-							"value": "reqres-free-v1"
-						}
-					}
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -323,7 +317,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').output.errors[0].message),\n  concat('Page ', string(item()), ' returned no data.')\n)\n",
+											"value": "@or(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  equals(activity('CopyAPIData').output.rowsCopied, 0)\n)",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
@@ -345,12 +339,19 @@
 											{
 												"name": "Append_ErrorLog",
 												"type": "AppendVariable",
-												"dependsOn": [],
+												"dependsOn": [
+													{
+														"activity": "Set_ErrorMessage",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorLog",
 													"value": {
-														"value": "@concat('Page ', string(item()), ' failed. Error: ', activity('CopyAPIData').error.message)",
+														"value": "@concat('Page ', string(item()), ' failed. Error: ', variables('ErrorMessage'))",
 														"type": "Expression"
 													}
 												}
@@ -411,6 +412,23 @@
 													"referenceName": "SQLServer",
 													"type": "LinkedServiceReference"
 												}
+											},
+											{
+												"name": "Set_ErrorMessage",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorMessage",
+													"value": {
+														"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}
@@ -469,6 +487,9 @@
 						"type": "Array"
 					},
 					"CopyStatus": {
+						"type": "String"
+					},
+					"ErrorMessage": {
 						"type": "String"
 					}
 				},
