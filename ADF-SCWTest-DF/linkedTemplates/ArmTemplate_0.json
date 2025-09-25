@@ -317,7 +317,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0)",
+											"value": "@equals(activity('CopyAPIData').Status, 'Failed')",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
@@ -401,7 +401,7 @@
 														},
 														"ErrorMessage": {
 															"value": {
-																"value": "@if(greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), activity('CopyAPIData').output.errors[0]['message'], 'No error message')",
+																"value": "@if(equals(activity('CopyAPIData').Status, 'Failed'), activity('CopyAPIData').error.message, 'No error message')",
 																"type": "Expression"
 															},
 															"type": "String"
@@ -425,7 +425,7 @@
 												"typeProperties": {
 													"variableName": "ErrorMessage",
 													"value": {
-														"value": "@if(greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), activity('CopyAPIData').output.errors[0]['message'], 'No error message')",
+														"value": "@if(equals(activity('CopyAPIData').Status, 'Failed'), activity('CopyAPIData').error.message, 'No error message')",
 														"type": "Expression"
 													}
 												}
@@ -452,7 +452,7 @@
 									"typeProperties": {
 										"variableName": "CopyStatus",
 										"value": {
-											"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  'Failed',\n  'Success'\n)",
+											"value": "@if(equals(activity('CopyAPIData').Status, 'Failed'), 'Failed', 'Success')",
 											"type": "Expression"
 										}
 									}
