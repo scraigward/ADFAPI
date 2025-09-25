@@ -1,0 +1,39 @@
+{
+	"name": "RestResource1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestAPIGetUsers",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"BaseURL": "@dataset().BaseURL"
+			}
+		},
+		"parameters": {
+			"ID": {
+				"type": "Int"
+			},
+			"Email": {
+				"type": "String"
+			},
+			"First_Name": {
+				"type": "String"
+			},
+			"Last_Name": {
+				"type": "String"
+			},
+			"BaseURL": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "users",
+			"requestMethod": "POST",
+			"requestBody": {
+				"value": "@json(concat('{\"id\":', string(dataset().ID), ',\"email\":\"', dataset().Email, '\",\"first_name\":\"', dataset().First_Name, '\",\"last_name\":\"', dataset().Last_Name, '\"}'))",
+				"type": "Expression"
+			}
+		}
+	}
+}
