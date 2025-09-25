@@ -327,7 +327,7 @@
 												"dependsOn": [],
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "ErrorLog",
+													"variableName": "SuccessLog",
 													"value": {
 														"value": "@concat('Page ', string(item()), ' succeeded.')",
 														"type": "Expression"
@@ -481,7 +481,7 @@
 												"dependsOn": [],
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "ErrorLog",
+													"variableName": "SuccessLog",
 													"value": {
 														"value": "@concat('Page ', string(item()), ' succeeded.')",
 														"type": "Expression"
@@ -569,6 +569,9 @@
 						"type": "String"
 					},
 					"InfoLog": {
+						"type": "Array"
+					},
+					"SuccessLog": {
 						"type": "Array"
 					}
 				},
