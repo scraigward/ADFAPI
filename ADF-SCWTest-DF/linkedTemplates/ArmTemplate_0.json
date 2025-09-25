@@ -317,7 +317,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0)",
+											"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
@@ -401,7 +401,7 @@
 														},
 														"ErrorMessage": {
 															"value": {
-																"value": "@activity('CopyAPIData').error.message",
+																"value": "@if(greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0), activity('CopyAPIData').output.errors[0]['message'], 'No error message')",
 																"type": "Expression"
 															},
 															"type": "String"
@@ -482,7 +482,10 @@
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorLog",
-													"value": "@concat('Page ', string(item()), ' succeeded.')"
+													"value": {
+														"value": "@concat('Page ', string(item()), ' succeeded.')",
+														"type": "Expression"
+													}
 												}
 											}
 										],
@@ -498,7 +501,10 @@
 												"userProperties": [],
 												"typeProperties": {
 													"variableName": "ErrorMessage",
-													"value": "@concat('Page ', string(item()), ' returned no data.')"
+													"value": {
+														"value": "@concat('Page ', string(item()), ' returned no data.')",
+														"type": "Expression"
+													}
 												}
 											},
 											{
