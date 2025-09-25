@@ -268,7 +268,7 @@
 										"typeProperties": {
 											"variableName": "ErrorMessage",
 											"value": {
-												"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+												"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
 												"type": "Expression"
 											}
 										}
@@ -295,10 +295,23 @@
 							"typeProperties": {
 								"variableName": "CopyStatus",
 								"value": {
-									"value": "@activity('CopyAPIData').status",
+									"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  'Failed',\n  'Success'\n)",
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "If_NoDataReturned",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Set_CopyStatus",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": []
 						}
 					]
 				}
