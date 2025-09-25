@@ -196,7 +196,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@or(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  equals(activity('CopyAPIData').output.rowsCopied, 0)\n)",
+											"value": "@greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0)",
 											"type": "Expression"
 										},
 										"ifFalseActivities": [
@@ -304,7 +304,7 @@
 												"typeProperties": {
 													"variableName": "ErrorMessage",
 													"value": {
-														"value": "@if(\n  greater(length(activity('CopyAPIData').output.errors), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
+														"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  activity('CopyAPIData').output.errors[0]['message'],\n  'No error message'\n)",
 														"type": "Expression"
 													}
 												}
@@ -331,9 +331,76 @@
 									"typeProperties": {
 										"variableName": "CopyStatus",
 										"value": {
-											"value": "@activity('CopyAPIData').status",
+											"value": "@if(\n  greater(length(coalesce(activity('CopyAPIData').output.errors, [])), 0),\n  'Failed',\n  'Success'\n)",
 											"type": "Expression"
 										}
+									}
+								},
+								{
+									"name": "If_NoDataReturned",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Set_CopyStatus",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@equals(activity('CopyAPIData').output.rowsCopied, 0)",
+											"type": "Expression"
+										},
+										"ifFalseActivities": [
+											{
+												"name": "Append variable3",
+												"type": "AppendVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorLog",
+													"value": "@concat('Page ', string(item()), ' succeeded.')"
+												}
+											}
+										],
+										"ifTrueActivities": [
+											{
+												"name": "Set_InfoMessage",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorMessage",
+													"value": "@concat('Page ', string(item()), ' returned no data.')"
+												}
+											},
+											{
+												"name": "Append_InfoLog",
+												"type": "AppendVariable",
+												"dependsOn": [
+													{
+														"activity": "Set_InfoMessage",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ErrorLog",
+													"value": {
+														"value": "@concat('Page ', string(item()), ' returned no data.')",
+														"type": "Expression"
+													}
+												}
+											}
+										]
 									}
 								}
 							]
