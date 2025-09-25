@@ -236,7 +236,8 @@
 		],
 		"parameters": {
 			"BaseURL": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "https://reqres.in/api/users"
 			}
 		},
 		"variables": {
