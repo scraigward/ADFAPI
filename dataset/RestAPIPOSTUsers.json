@@ -1,31 +1,13 @@
 {
 	"name": "RestAPIPOSTUsers",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "RestAPIGetUsers",
-			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"ID": {
-				"type": "Int"
-			},
-			"Email": {
-				"type": "String"
-			},
-			"First_Name": {
-				"type": "String"
-			},
-			"Last_Name": {
-				"type": "String"
-			}
-		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": "users",
 			"requestMethod": "POST",
 			"requestBody": {
-				"value": "@json(concat('{\"id\":', string(dataset().ID), ',\"email\":\"', dataset().Email, '\",\"first_name\":\"', dataset().First_Name, '\",\"last_name\":\"', dataset().Last_Name, '\"}'))",
+				"value": "@json(concat('{\"name\":\"', item().First_Name, ' ', item().Last_Name, '\",\"job\":\"', item().Email, '\"}'))",
 				"type": "Expression"
 			}
 		}
