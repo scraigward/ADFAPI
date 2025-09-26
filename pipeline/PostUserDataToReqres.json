@@ -103,7 +103,10 @@
 								"storedProcedureName": "[dbo].[LogAPIResponse_SP]",
 								"storedProcedureParameters": {
 									"ADFHttpStatusCodeInResponse": {
-										"value": "ADFHttpStatusCodeInResponse",
+										"value": {
+											"value": "@item().ADFHttpStatusCodeInResponse",
+											"type": "Expression"
+										},
 										"type": "String"
 									},
 									"ADFWebActivityResponseHeaders": {
