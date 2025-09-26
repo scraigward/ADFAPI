@@ -965,6 +965,103 @@
 											"job": "Data Migration Specialist"
 										}
 									}
+								},
+								{
+									"name": "Stored procedure1",
+									"type": "SqlServerStoredProcedure",
+									"dependsOn": [
+										{
+											"activity": "PostToReqres",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"storedProcedureName": "[[dbo].[LogAPIResponse_SP]",
+										"storedProcedureParameters": {
+											"ADFHttpStatusCodeInResponse": {
+												"value": "ADFHttpStatusCodeInResponse",
+												"type": "String"
+											},
+											"ADFWebActivityResponseHeaders": {
+												"value": "",
+												"type": "String"
+											},
+											"BillingDuration": {
+												"value": "",
+												"type": "Double"
+											},
+											"BillingMeterType": {
+												"value": "",
+												"type": "String"
+											},
+											"BillingUnit": {
+												"value": "",
+												"type": "String"
+											},
+											"CreatedAt": {
+												"value": "",
+												"type": "DateTime"
+											},
+											"EffectiveIntegrationRuntime": {
+												"value": "",
+												"type": "String"
+											},
+											"Email": {
+												"value": "",
+												"type": "String"
+											},
+											"ErrorCode": {
+												"value": "",
+												"type": "String"
+											},
+											"ErrorMessage": {
+												"value": "",
+												"type": "String"
+											},
+											"ExecutionDuration": {
+												"value": "",
+												"type": "Int32"
+											},
+											"IntegrationRuntimeQueueDuration": {
+												"value": "",
+												"type": "Int32"
+											},
+											"IsSuccess": {
+												"value": "",
+												"type": "Boolean"
+											},
+											"Job": {
+												"value": "",
+												"type": "String"
+											},
+											"Name": {
+												"value": "",
+												"type": "String"
+											},
+											"RawResponse": {
+												"value": "",
+												"type": "String"
+											},
+											"UserID": {
+												"value": "",
+												"type": "String"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "SQLServer",
+										"type": "LinkedServiceReference"
+									}
 								}
 							]
 						}
@@ -986,7 +1083,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLDB')]"
+				"[concat(variables('factoryId'), '/datasets/SQLDB')]",
+				"[concat(variables('factoryId'), '/linkedServices/SQLServer')]"
 			]
 		}
 	]
