@@ -16,9 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlSource",
-						"sqlReaderQuery": "SELECT First_Name, Last_Name, Email FROM dbo.Users",
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLDB",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -112,6 +116,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"Schema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"Table": {
+				"type": "string",
+				"defaultValue": "Users"
+			}
+		},
 		"annotations": []
 	}
 }
