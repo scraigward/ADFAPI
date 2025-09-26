@@ -104,7 +104,7 @@
 								"storedProcedureParameters": {
 									"ADFHttpStatusCodeInResponse": {
 										"value": {
-											"value": "@activity('PostToReqres').output.id",
+											"value": "@activity('PostToReqres').output.ADFHttpStatusCodeInResponse",
 											"type": "Expression"
 										},
 										"type": "String"
