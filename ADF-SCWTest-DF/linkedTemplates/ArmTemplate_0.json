@@ -1002,13 +1002,6 @@
 												},
 												"type": "String"
 											},
-											"BillingDuration": {
-												"value": {
-													"value": "@activity('PostToReqres').output.BillingDuration",
-													"type": "Expression"
-												},
-												"type": "String"
-											},
 											"BillingMeterType": {
 												"value": {
 													"value": "@activity('PostToReqres').output.BillingMeterType",
