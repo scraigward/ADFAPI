@@ -100,7 +100,77 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "[dbo].[LogAPIResponse_SP]"
+								"storedProcedureName": "[dbo].[LogAPIResponse_SP]",
+								"storedProcedureParameters": {
+									"ADFHttpStatusCodeInResponse": {
+										"value": "ADFHttpStatusCodeInResponse",
+										"type": "String"
+									},
+									"ADFWebActivityResponseHeaders": {
+										"value": "",
+										"type": "String"
+									},
+									"BillingDuration": {
+										"value": "",
+										"type": "Double"
+									},
+									"BillingMeterType": {
+										"value": "",
+										"type": "String"
+									},
+									"BillingUnit": {
+										"value": "",
+										"type": "String"
+									},
+									"CreatedAt": {
+										"value": "",
+										"type": "DateTime"
+									},
+									"EffectiveIntegrationRuntime": {
+										"value": "",
+										"type": "String"
+									},
+									"Email": {
+										"value": "",
+										"type": "String"
+									},
+									"ErrorCode": {
+										"value": "",
+										"type": "String"
+									},
+									"ErrorMessage": {
+										"value": "",
+										"type": "String"
+									},
+									"ExecutionDuration": {
+										"value": "",
+										"type": "Int32"
+									},
+									"IntegrationRuntimeQueueDuration": {
+										"value": "",
+										"type": "Int32"
+									},
+									"IsSuccess": {
+										"value": "",
+										"type": "Boolean"
+									},
+									"Job": {
+										"value": "",
+										"type": "String"
+									},
+									"Name": {
+										"value": "",
+										"type": "String"
+									},
+									"RawResponse": {
+										"value": "",
+										"type": "String"
+									},
+									"UserID": {
+										"value": "",
+										"type": "String"
+									}
+								}
 							},
 							"linkedServiceName": {
 								"referenceName": "SQLServer",
