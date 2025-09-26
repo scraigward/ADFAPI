@@ -16,23 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
+						"type": "SqlSource",
+						"sqlReaderQuery": "SELECT First_Name, Last_Name, Email FROM dbo.Users",
 						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "SQLDB",
-						"type": "DatasetReference",
-						"parameters": {
-							"Schema": {
-								"value": "@pipeline().parameters.Schema",
-								"type": "Expression"
-							},
-							"Table": {
-								"value": "@pipeline().parameters.Table",
-								"type": "Expression"
-							}
-						}
 					},
 					"firstRowOnly": false
 				}
@@ -69,8 +55,7 @@
 							"typeProperties": {
 								"method": "POST",
 								"headers": {
-									"Content-Type": "application/json",
-									"x-api-key": "reqres-free-v1"
+									"Content-Type": "application/json"
 								},
 								"url": "https://reqres.in/api/users",
 								"body": {
@@ -81,116 +66,46 @@
 							}
 						},
 						{
-							"name": "LogAPIResponseToSQL",
-							"type": "StoredProcedure",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
+							"name": "LogErrorIfFailed",
+							"type": "IfCondition",
 							"dependsOn": [],
-							"policy": {
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "dbo.LogAPIResponse_SP",
-								"storedProcedureParameters": {
-									"Name": {
-										"value": "@activity('PostToReqres').output.name",
-										"type": "String"
-									},
-									"Email": {
-										"value": "@activity('PostToReqres').output.email",
-										"type": "String"
-									},
-									"Job": {
-										"value": "@activity('PostToReqres').output.job",
-										"type": "String"
-									},
-									"UserID": {
-										"value": "@activity('PostToReqres').output.id",
-										"type": "String"
-									},
-									"CreatedAt": {
-										"value": "@activity('PostToReqres').output.createdAt",
-										"type": "String"
-									},
-									"ADFHttpStatusCodeInResponse": {
-										"value": "@activity('PostToReqres').statusCode",
-										"type": "String"
-									},
-									"ADFWebActivityResponseHeaders": {
-										"value": "@string(activity('PostToReqres').output.ADFWebActivityResponseHeaders)",
-										"type": "String"
-									},
-									"EffectiveIntegrationRuntime": {
-										"value": "@activity('PostToReqres').output.effectiveIntegrationRuntime",
-										"type": "String"
-									},
-									"ExecutionDuration": {
-										"value": "@activity('PostToReqres').output.executionDuration",
-										"type": "Int"
-									},
-									"IntegrationRuntimeQueueDuration": {
-										"value": "@activity('PostToReqres').output.durationInQueue.integrationRuntimeQueue",
-										"type": "Int"
-									},
-									"BillingMeterType": {
-										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].meterType",
-										"type": "String"
-									},
-									"BillingDuration": {
-										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].duration",
-										"type": "Float"
-									},
-									"BillingUnit": {
-										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].unit",
-										"type": "String"
-									},
-									"ErrorCode": {
-										"value": "@activity('PostToReqres').statusCode",
-										"type": "String"
-									},
-									"ErrorMessage": {
-										"value": "@string(activity('PostToReqres').output)",
-										"type": "String"
-									},
-									"IsSuccess": {
-										"value": "@equals(activity('PostToReqres').statusCode, 201)",
-										"type": "Boolean"
-									},
-									"RawResponse": {
-										"value": "@string(activity('PostToReqres').output)",
-										"type": "String"
+								"expression": {
+									"value": "@not(equals(activity('PostToReqres').statusCode, 201))",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "LogErrorToSQL",
+										"type": "StoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "dbo.LogError_SP",
+											"storedProcedureParameters": {
+												"ErrorMessage": {
+													"value": "@activity('PostToReqres').output",
+													"type": "String"
+												},
+												"Source": {
+													"value": "PostToReqres",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "SQL_LinkedService",
+											"type": "LinkedServiceReference"
+										}
 									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "SQL_LinkedService",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "Stored procedure1",
-							"type": "SqlServerStoredProcedure",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": "[dbo].[LogAPIResponse_SP]"
-							},
-							"linkedServiceName": {
-								"referenceName": "SQLServer",
-								"type": "LinkedServiceReference"
+								]
 							}
 						}
 					]
@@ -204,7 +119,7 @@
 			},
 			"Table": {
 				"type": "string",
-				"defaultValue": "Users"
+				"defaultValue": "users"
 			}
 		},
 		"annotations": []
