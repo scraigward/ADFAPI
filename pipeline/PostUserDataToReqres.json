@@ -22,7 +22,17 @@
 					},
 					"dataset": {
 						"referenceName": "SQLDB",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": {
+								"value": "@pipeline().parameters.Schema",
+								"type": "Expression"
+							},
+							"Table": {
+								"value": "@pipeline().parameters.Table",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
