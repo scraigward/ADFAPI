@@ -1,0 +1,117 @@
+{
+	"name": "PostUserDataToReqres",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetUsersFromSQL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 1,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": "SELECT First_Name, Last_Name, Email FROM dbo.Users",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEachUser",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetUsersFromSQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('GetUsersFromSQL').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "PostToReqres",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "00:01:00",
+								"retry": 2,
+								"retryIntervalInSeconds": 30
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"url": "https://reqres.in/api/users",
+								"body": {
+									"name": "@concat(item().First_Name, ' ', item().Last_Name)",
+									"email": "@item().Email",
+									"job": "Data Migration Specialist"
+								}
+							}
+						},
+						{
+							"name": "LogErrorIfFailed",
+							"type": "IfCondition",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@not(equals(activity('PostToReqres').statusCode, 201))",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "LogErrorToSQL",
+										"type": "StoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "dbo.LogError_SP",
+											"storedProcedureParameters": {
+												"ErrorMessage": {
+													"value": "@activity('PostToReqres').output",
+													"type": "String"
+												},
+												"Source": {
+													"value": "PostToReqres",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "SQL_LinkedService",
+											"type": "LinkedServiceReference"
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": []
+	}
+}
