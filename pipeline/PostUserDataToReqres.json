@@ -115,7 +115,7 @@
 									},
 									"BillingDuration": {
 										"value": "",
-										"type": "Double"
+										"type": "String"
 									},
 									"BillingMeterType": {
 										"value": "",
@@ -127,7 +127,7 @@
 									},
 									"CreatedAt": {
 										"value": "",
-										"type": "DateTime"
+										"type": "String"
 									},
 									"EffectiveIntegrationRuntime": {
 										"value": "",
@@ -147,15 +147,15 @@
 									},
 									"ExecutionDuration": {
 										"value": "",
-										"type": "Int32"
+										"type": "String"
 									},
 									"IntegrationRuntimeQueueDuration": {
 										"value": "",
-										"type": "Int32"
+										"type": "String"
 									},
 									"IsSuccess": {
 										"value": "",
-										"type": "Boolean"
+										"type": "String"
 									},
 									"Job": {
 										"value": "",
