@@ -81,6 +81,103 @@
 							}
 						},
 						{
+							"name": "LogAPIResponseToSQL",
+							"type": "StoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "PostToReqres",
+									"dependencyConditions": [
+										"Succeeded",
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "dbo.LogAPIResponse_SP",
+								"storedProcedureParameters": {
+									"Name": {
+										"value": "@activity('PostToReqres').output.name",
+										"type": "String"
+									},
+									"Email": {
+										"value": "@activity('PostToReqres').output.email",
+										"type": "String"
+									},
+									"Job": {
+										"value": "@activity('PostToReqres').output.job",
+										"type": "String"
+									},
+									"UserID": {
+										"value": "@activity('PostToReqres').output.id",
+										"type": "String"
+									},
+									"CreatedAt": {
+										"value": "@activity('PostToReqres').output.createdAt",
+										"type": "String"
+									},
+									"ADFHttpStatusCodeInResponse": {
+										"value": "@activity('PostToReqres').statusCode",
+										"type": "String"
+									},
+									"ADFWebActivityResponseHeaders": {
+										"value": "@string(activity('PostToReqres').output.ADFWebActivityResponseHeaders)",
+										"type": "String"
+									},
+									"EffectiveIntegrationRuntime": {
+										"value": "@activity('PostToReqres').output.effectiveIntegrationRuntime",
+										"type": "String"
+									},
+									"ExecutionDuration": {
+										"value": "@activity('PostToReqres').output.executionDuration",
+										"type": "Int"
+									},
+									"IntegrationRuntimeQueueDuration": {
+										"value": "@activity('PostToReqres').output.durationInQueue.integrationRuntimeQueue",
+										"type": "Int"
+									},
+									"BillingMeterType": {
+										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].meterType",
+										"type": "String"
+									},
+									"BillingDuration": {
+										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].duration",
+										"type": "Float"
+									},
+									"BillingUnit": {
+										"value": "@activity('PostToReqres').output.billingReference.billableDuration[0].unit",
+										"type": "String"
+									},
+									"ErrorCode": {
+										"value": "@activity('PostToReqres').statusCode",
+										"type": "String"
+									},
+									"ErrorMessage": {
+										"value": "@string(activity('PostToReqres').output)",
+										"type": "String"
+									},
+									"IsSuccess": {
+										"value": "@equals(activity('PostToReqres').statusCode, 201)",
+										"type": "Boolean"
+									},
+									"RawResponse": {
+										"value": "@string(activity('PostToReqres').output)",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "SQL_LinkedService",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
 							"name": "LogErrorIfFailed",
 							"type": "IfCondition",
 							"state": "Inactive",
@@ -124,6 +221,26 @@
 									}
 								]
 							}
+						},
+						{
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "PostToReqres",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": []
 						}
 					]
 				}
