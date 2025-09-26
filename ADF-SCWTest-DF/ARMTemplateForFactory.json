@@ -989,71 +989,122 @@
 										"storedProcedureName": "[[dbo].[LogAPIResponse_SP]",
 										"storedProcedureParameters": {
 											"ADFHttpStatusCodeInResponse": {
-												"value": "ADFHttpStatusCodeInResponse",
+												"value": {
+													"value": "@activity('PostToReqres').output.ADFHttpStatusCodeInResponse",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"ADFWebActivityResponseHeaders": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.ADFWebActivityResponseHeaders",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"BillingDuration": {
-												"value": "",
-												"type": "Double"
+												"value": {
+													"value": "@activity('PostToReqres').output.BillingDuration",
+													"type": "Expression"
+												},
+												"type": "String"
 											},
 											"BillingMeterType": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.BillingMeterType",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"BillingUnit": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.BillingUnit",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"CreatedAt": {
-												"value": "",
-												"type": "DateTime"
+												"value": {
+													"value": "@activity('PostToReqres').output.CreatedAt",
+													"type": "Expression"
+												},
+												"type": "String"
 											},
 											"EffectiveIntegrationRuntime": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.EffectiveIntegrationRuntime",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"Email": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.Email",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"ErrorCode": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.ErrorCode",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"ErrorMessage": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.ErrorMessage",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"ExecutionDuration": {
-												"value": "",
-												"type": "Int32"
+												"value": {
+													"value": "@activity('PostToReqres').output.ExecutionDuration",
+													"type": "Expression"
+												},
+												"type": "String"
 											},
 											"IntegrationRuntimeQueueDuration": {
-												"value": "",
-												"type": "Int32"
+												"value": {
+													"value": "@activity('PostToReqres').output.IntegrationRuntimeQueueDuration",
+													"type": "Expression"
+												},
+												"type": "String"
 											},
 											"IsSuccess": {
-												"value": "",
-												"type": "Boolean"
+												"value": {
+													"value": "@activity('PostToReqres').output.IsSuccess",
+													"type": "Expression"
+												},
+												"type": "String"
 											},
 											"Job": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.Job",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"Name": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.Name",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"RawResponse": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.RawResponse",
+													"type": "Expression"
+												},
 												"type": "String"
 											},
 											"UserID": {
-												"value": "",
+												"value": {
+													"value": "@activity('PostToReqres').output.UserID",
+													"type": "Expression"
+												},
 												"type": "String"
 											}
 										}
