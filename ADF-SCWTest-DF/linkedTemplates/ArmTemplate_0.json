@@ -125,8 +125,7 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "RestAPIGetUsers",
-					"type": "LinkedServiceReference",
-					"parameters": {}
+					"type": "LinkedServiceReference"
 				},
 				"parameters": {
 					"First_Name": {
@@ -667,7 +666,48 @@
 											"writeBatchSize": 10000,
 											"httpCompressionType": "none"
 										},
-										"enableStaging": false
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "ID",
+														"type": "Int32"
+													},
+													"sink": {
+														"path": "$['ID']"
+													}
+												},
+												{
+													"source": {
+														"name": "Email",
+														"type": "String"
+													},
+													"sink": {
+														"path": "$['Email']"
+													}
+												},
+												{
+													"source": {
+														"name": "First_Name",
+														"type": "String"
+													},
+													"sink": {
+														"path": "$['First_Name']"
+													}
+												},
+												{
+													"source": {
+														"name": "Last_Name",
+														"type": "String"
+													},
+													"sink": {
+														"path": "$['Last_Name']"
+													}
+												}
+											]
+										}
 									},
 									"inputs": [
 										{
@@ -814,10 +854,6 @@
 								}
 							},
 							"firstRowOnly": false
-						},
-						"dataset": {
-							"referenceName": "SQLDB",
-							"type": "DatasetReference"
 						}
 					}
 				],
@@ -844,6 +880,113 @@
 				"[concat(variables('factoryId'), '/datasets/SQLDB')]",
 				"[concat(variables('factoryId'), '/datasets/RestAPIPOSTUsers')]",
 				"[concat(variables('factoryId'), '/linkedServices/SQLServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostUserDataToReqres')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GetUsersFromSQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 1,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLDB",
+								"type": "DatasetReference",
+								"parameters": {
+									"Schema": {
+										"value": "@pipeline().parameters.Schema",
+										"type": "Expression"
+									},
+									"Table": {
+										"value": "@pipeline().parameters.Table",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEachUser",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GetUsersFromSQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GetUsersFromSQL').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "PostToReqres",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "00:01:00",
+										"retry": 2,
+										"retryIntervalInSeconds": 30
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json",
+											"x-api-key": "reqres-free-v1"
+										},
+										"url": "https://reqres.in/api/users",
+										"body": {
+											"name": "@concat(item().First_Name, ' ', item().Last_Name)",
+											"email": "@item().Email",
+											"job": "Data Migration Specialist"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Schema": {
+						"type": "string",
+						"defaultValue": "dbo"
+					},
+					"Table": {
+						"type": "string",
+						"defaultValue": "users"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLDB')]"
 			]
 		}
 	]
